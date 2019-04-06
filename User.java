@@ -1,6 +1,7 @@
 package battleship;
 
 public class User {
+	
 	private Field field = new Field();
 	public  String name;
 	
@@ -29,6 +30,5 @@ public class User {
 			System.out.println(this.name+" won!");
 		}
 		return a.isDestroyed();
-	}
-	
+	}	
 }

@@ -3,6 +3,7 @@ package battleship;
 import java.util.Scanner;
 
 public class Ship {
+	
 	private int size;
 	private char orientation;
 	private Position[] positions;
@@ -26,6 +27,7 @@ public class Ship {
 			}
 		}
 	}
+	
 	public Position[] getPosition() {return this.positions;}
 	public int getSize() {return this.size;}
 	
@@ -38,10 +40,9 @@ public class Ship {
 		}
 		return false;
 	}
+	
 	boolean isDestroyed() {
-		if(this.size == 0) {
-			return true;
-		}
+		if(this.size == 0) return true;
 		return false;
 	}
 }

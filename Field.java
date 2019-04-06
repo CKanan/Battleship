@@ -3,6 +3,7 @@ package battleship;
 import java.util.Scanner;
 
 public class Field {
+	
 	public static final int row = 11;
 	public static final int column = 11;
 	public static int maxCell = row * column;
@@ -60,7 +61,7 @@ public class Field {
 
 					status=isCrashed(pos, size, orient,i);
 				}
-				st=inOut(ships[i],size);
+				st=ShipInOut(ships[i],size);
 			}
 		}	
 		for (int i = 0; i < 50; ++i) System.out.println();
@@ -83,7 +84,7 @@ public class Field {
 		return false;
 	}
 	
-	public boolean inOut(Ship ship, int size) {
+	public boolean ShipInOut(Ship ship, int size) {
 		for(int i=0;i<ship.getSize();i++) {
 			if(!ship.getPosition()[i].inBorder()) { 
 				nSize[size-2]=nSize[size-2]+1;
