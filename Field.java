@@ -9,12 +9,12 @@ public class Field {
 	private int maxShip = 2;
 	private Ship[] ships = new Ship[maxShip];
 	private int[] nSize= {1,2,1,1};
-	private int[][] grid = new int[row][column];
+	private char[][] grid = new char[row][column];
 	
 	public Field() {
 		for(int i=0;i<row;i++) {
 			for(int j=0;j<column;j++)
-				grid[i][j]=0;
+				grid[i][j]='.';
 		}
 		Position pos=new Position();
 		int size=0;
@@ -125,18 +125,18 @@ public class Field {
 			System.out.println("Position is in out!\nChoose another position:");
 			return 0;
 		}
-		if(grid[pos.y][pos.x]!=0 && grid[pos.y][pos.x]!=3){
+		if(grid[pos.y][pos.x]!='.' && grid[pos.y][pos.x]!='A' && grid[pos.y][pos.x]!='B' && grid[pos.y][pos.x]!='C' && grid[pos.y][pos.x]!='D'){
 			System.out.println("Cannot shoot more than one\nChoose another position:");
 			return 0;
 		}
 		for(int i=0;i<maxShip;i++) {
 			if(ships[i].isFired(pos)==true) { 
-				grid[pos.y][pos.x]=1;
+				grid[pos.y][pos.x]='X';
 				System.out.println("Ship has been shot!");
 				return 1;
 			}	
 		}
-		grid[pos.y][pos.x]=2;
+		grid[pos.y][pos.x]='O';
 		System.out.println("Ship has been missed!");
 		return 2;
 	}

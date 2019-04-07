@@ -8,7 +8,7 @@ public class Ship {
 	private char orientation;
 	private Position[] positions;
 	
-	public Ship(Position position,int length,char orientation,int[][] grid) {
+	public Ship(Position position,int length,char orientation,char[][] grid) {
 		this.positions = new Position[length];
 		this.size = length;
 		this.orientation = orientation;
@@ -25,7 +25,10 @@ public class Ship {
 				positions[i].x = position.x+i;
 				positions[i].y = position.y;
 			}
-				grid[positions[i].y][positions[i].x]=3;
+			if(this.size==5) grid[positions[i].y][positions[i].x]='A';
+			if(this.size==4) grid[positions[i].y][positions[i].x]='B';
+			if(this.size==3) grid[positions[i].y][positions[i].x]='C';
+			if(this.size==2) grid[positions[i].y][positions[i].x]='D';
 		}
 	}
 		
