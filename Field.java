@@ -6,15 +6,20 @@ public class Field {
 	
 	public static final int row = 11;
 	public static final int column = 11;
-	public static int maxCell = row * column;
-	public static final int maxShip = 2;
+//	public static int maxCell = row * column;
+	public static final int maxShip = 1;
 	private Ship[] ships = new Ship[maxShip];
-	private int[] isShooted =  new int[maxCell]; //0-not shot,1-shoot ship,2-shoot sea,3-ship exist
+//	private int[] isShooted =  new int[maxCell]; //0-not shot,1-shoot ship,2-shoot sea,3-ship exist
 	private int[] nSize= {1,2,1,1};
-	
+	public static int[][] grid = new int[column][row];
 	
 	public Field() {
-		for(int i=0;i<maxCell;i++) isShooted[i]=0;
+//		for(int i=0;i<maxCell;i++) isShooted[i]=0;
+		for(int i=0;i<row;i++) {
+			for(int j=0;j<column;j++)
+				grid[i][j]=0;
+		}
+		printGrid();
 		Position pos=new Position();
 		int size=0;
 		char orient=0;
@@ -63,8 +68,21 @@ public class Field {
 				}
 				st=ShipInOut(ships[i],size);
 			}
-		}	
+//			printGrid();
+		}
+		printGrid();
+
 		for (int i = 0; i < 50; ++i) System.out.println();
+	}
+	
+	public void printGrid() {
+		System.out.println();
+		for(int i=0;i<column;i++) {
+			for(int j=0;j<row;j++)
+				System.out.print(" "+grid[i][j]);
+			System.out.println();
+		}
+		System.out.println();
 	}
 	
 	public boolean isCrashed(Position position,int size,char orient,int maxship) {
@@ -100,19 +118,21 @@ public class Field {
 			System.out.println("Position is in out!");
 			return 0;
 		}
-		if(isShooted[column*pos.y+pos.x]!=0 && isShooted[column*pos.y+pos.x]!=3){
+		if(grid[pos.y][pos.x]!=0 && grid[pos.y][pos.x]!=3){
 			System.out.println("Cannot shoot more than one");
 			return 0;
 		}
 		for(int i=0;i<maxShip;i++) {
 			if(ships[i].isFired(pos)==true) { 
-				isShooted[column*pos.y+pos.x]=1;
+				grid[pos.y][pos.x]=1;
 				System.out.println("Ship has been shot!");
+//				printGrid();
 				return 1;
 			}	
 		}
-		isShooted[column*pos.y+pos.x]=2;
+		grid[pos.y][pos.x]=2;
 		System.out.println("Ship has been missed!");
+//		printGrid();
 		return 2;
 	}
 	

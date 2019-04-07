@@ -17,6 +17,11 @@ public class User {
 		return this.field.isFired(pos);
 	}
 	
+	public void printGrid() {
+		System.out.print("\n     "+name+"'s table");
+		field.printGrid();
+	}
+	
 	public boolean play(User a) {
 		Position pos=new Position();
 		int stat=0;
@@ -26,6 +31,7 @@ public class User {
 			pos.givePosition();
 			stat=a.isFired(pos);
 		}
+		a.printGrid();
 		if(a.isDestroyed()) {
 			System.out.println(this.name+" won!");
 		}

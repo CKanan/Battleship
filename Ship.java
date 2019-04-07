@@ -25,6 +25,7 @@ public class Ship {
 				positions[i].x = position.x+i;
 				positions[i].y = position.y;
 			}
+			Field.grid[positions[i].y][positions[i].x]=3;
 		}
 	}
 	
