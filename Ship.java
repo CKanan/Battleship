@@ -25,10 +25,10 @@ public class Ship {
 				positions[i].x = position.x+i;
 				positions[i].y = position.y;
 			}
-			grid[positions[i].y][positions[i].x]=3;
+				grid[positions[i].y][positions[i].x]=3;
 		}
 	}
-	
+		
 	public Position[] getPosition() {return this.positions;}
 	public int getSize() {return this.size;}
 	

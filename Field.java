@@ -9,7 +9,7 @@ public class Field {
 	private int maxShip = 2;
 	private Ship[] ships = new Ship[maxShip];
 	private int[] nSize= {1,2,1,1};
-	private int[][] grid = new int[column][row];
+	private int[][] grid = new int[row][column];
 	
 	public Field() {
 		for(int i=0;i<row;i++) {
@@ -32,7 +32,7 @@ public class Field {
 						System.out.println("Give "+(i+1)+" ship size: "); 
 						size=input.nextInt();
 						if(size<2 || size>5 || nSize[size-2]==0) {
-							System.out.println("Wrong size or inappropriate input!\nTry Again");
+							System.out.println("Wrong size or inappropriate input!");
 						}
 						else {
 							nSize[size-2]=nSize[size-2]-1;
@@ -59,12 +59,11 @@ public class Field {
 					}	
 					status=isCrashed(pos, size, orient,i);
 				}
-				st=!ShipInBorder(pos,size,orient);
+				st=ShipInOut(pos, size, orient);
 			}
 			ships[i]=new Ship(pos, size, orient,grid);
 		}
 		printGrid();
-//		for (int i = 0; i < 50; ++i) System.out.println();
 	}
 	
 	public void printGrid() {
@@ -101,29 +100,33 @@ public class Field {
 		return false;
 	}
 	
-	public boolean ShipInBorder(Position pos, int size,char orientation) {
+	public boolean ShipInOut(Position pos, int size,char orientation) {
 		for(int i=0;i<size;i++) {
 			if(orientation == 'V' || orientation=='v') {
-				if(pos.x>=0 && pos.x<column && pos.y+i>=0 && pos.y+i<row) 
+				if(pos.x<0 || pos.x>=column || pos.y+i<0 || pos.y+i>=row) {				
+					nSize[size-2]=nSize[size-2]+1;
+					System.out.println("Ship is in out!\nTry again");
 					return true;	
+				}	
 			}
 			if(orientation == 'H' || orientation=='h') {
-				if(pos.x+i>=0 && pos.x+i<column && pos.y>=0 && pos.y+i<row)
+				if(pos.x+i<0 && pos.x+i>=column && pos.y<0 && pos.y+i>=row) {
+					nSize[size-2]=nSize[size-2]+1;
+					System.out.println("Ship is in out!\nTry again");
 					return true;
+				}	
 			}
 		}
-		nSize[size-2]=nSize[size-2]+1;
-		System.out.println("Ship is in out!\nTry again");
 		return false;		
 	}
 	
 	public int isFired(Position pos) {
 		if(!pos.inBorder(column,row)) {
-			System.out.println("Position is in out!");
+			System.out.println("Position is in out!\nChoose another position:");
 			return 0;
 		}
 		if(grid[pos.y][pos.x]!=0 && grid[pos.y][pos.x]!=3){
-			System.out.println("Cannot shoot more than one");
+			System.out.println("Cannot shoot more than one\nChoose another position:");
 			return 0;
 		}
 		for(int i=0;i<maxShip;i++) {
