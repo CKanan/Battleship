@@ -22,8 +22,8 @@ public class Position {
 		this.y = 0;
 	}
 	
-	public boolean inBorder() {
-		if(this.x < Field.column && this.x >= 0 && this.y < Field.row && this.y >= 0 )
+	public boolean inBorder(int c,int r) {
+		if(this.x < c && this.x >= 0 && this.y < r && this.y >= 0 )
 			return true;
 		return false;
 	}

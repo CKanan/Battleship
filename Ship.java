@@ -8,7 +8,7 @@ public class Ship {
 	private char orientation;
 	private Position[] positions;
 	
-	public Ship(Position position,int length,char orientation) {
+	public Ship(Position position,int length,char orientation,int[][] grid) {
 		this.positions = new Position[length];
 		this.size = length;
 		this.orientation = orientation;
@@ -25,7 +25,7 @@ public class Ship {
 				positions[i].x = position.x+i;
 				positions[i].y = position.y;
 			}
-			Field.grid[positions[i].y][positions[i].x]=3;
+			grid[positions[i].y][positions[i].x]=3;
 		}
 	}
 	

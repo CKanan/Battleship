@@ -4,22 +4,18 @@ import java.util.Scanner;
 
 public class Field {
 	
-	public static final int row = 11;
-	public static final int column = 11;
-//	public static int maxCell = row * column;
-	public static final int maxShip = 1;
+	private  int row = 11;
+	private int column = 11;
+	private int maxShip = 1;
 	private Ship[] ships = new Ship[maxShip];
-//	private int[] isShooted =  new int[maxCell]; //0-not shot,1-shoot ship,2-shoot sea,3-ship exist
 	private int[] nSize= {1,2,1,1};
-	public static int[][] grid = new int[column][row];
+	private int[][] grid = new int[column][row];
 	
 	public Field() {
-//		for(int i=0;i<maxCell;i++) isShooted[i]=0;
 		for(int i=0;i<row;i++) {
 			for(int j=0;j<column;j++)
 				grid[i][j]=0;
 		}
-		printGrid();
 		Position pos=new Position();
 		int size=0;
 		char orient=0;
@@ -49,9 +45,9 @@ public class Field {
 						int x=input.nextInt();
 						int y=input.nextInt();
 						pos=new Position(x, y);
-						if(!pos.inBorder()) 
+						if(!pos.inBorder(column,row)) 
 							System.out.println("Positions have to between [0,10]!");
-						stat=!pos.inBorder();
+						stat=!pos.inBorder(column,row);
 					}
 					stat=true;
 					while(stat) {
@@ -62,17 +58,15 @@ public class Field {
 						else System.out.println("Orientation have to (v,V or h,H)");
 					}	
 					
-					ships[i]=new Ship(pos, size, orient);
+					ships[i]=new Ship(pos, size, orient,grid);
 
 					status=isCrashed(pos, size, orient,i);
 				}
 				st=ShipInOut(ships[i],size);
 			}
-//			printGrid();
 		}
 		printGrid();
-
-		for (int i = 0; i < 50; ++i) System.out.println();
+//		for (int i = 0; i < 50; ++i) System.out.println();
 	}
 	
 	public void printGrid() {
@@ -104,7 +98,7 @@ public class Field {
 	
 	public boolean ShipInOut(Ship ship, int size) {
 		for(int i=0;i<ship.getSize();i++) {
-			if(!ship.getPosition()[i].inBorder()) { 
+			if(!ship.getPosition()[i].inBorder(column,row)) { 
 				nSize[size-2]=nSize[size-2]+1;
 				System.out.println("Ship is in out!\nTry again");
 				return true;
@@ -114,7 +108,7 @@ public class Field {
 	}
 	
 	public int isFired(Position pos) {
-		if(!pos.inBorder()) {
+		if(!pos.inBorder(column,row)) {
 			System.out.println("Position is in out!");
 			return 0;
 		}
@@ -126,13 +120,11 @@ public class Field {
 			if(ships[i].isFired(pos)==true) { 
 				grid[pos.y][pos.x]=1;
 				System.out.println("Ship has been shot!");
-//				printGrid();
 				return 1;
 			}	
 		}
 		grid[pos.y][pos.x]=2;
 		System.out.println("Ship has been missed!");
-//		printGrid();
 		return 2;
 	}
 	
