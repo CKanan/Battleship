@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Field {
 	
-	private  int row = 11;
-	private int column = 11;
-	private int maxShip = 1;
+	private  int row = 10;
+	private int column = 10;
+	private int maxShip = 2;
 	private Ship[] ships = new Ship[maxShip];
 	private int[] nSize= {1,2,1,1};
 	private int[][] grid = new int[column][row];
@@ -46,7 +46,7 @@ public class Field {
 						int y=input.nextInt();
 						pos=new Position(x, y);
 						if(!pos.inBorder(column,row)) 
-							System.out.println("Positions have to between [0,10]!");
+							System.out.println("Positions have to between [0,"+(row-1)+"]!");
 						stat=!pos.inBorder(column,row);
 					}
 					stat=true;
@@ -57,13 +57,11 @@ public class Field {
 							stat=false;
 						else System.out.println("Orientation have to (v,V or h,H)");
 					}	
-					
-					ships[i]=new Ship(pos, size, orient,grid);
-
 					status=isCrashed(pos, size, orient,i);
 				}
-				st=ShipInOut(ships[i],size);
+				st=!ShipInBorder(pos,size,orient);
 			}
+			ships[i]=new Ship(pos, size, orient,grid);
 		}
 		printGrid();
 //		for (int i = 0; i < 50; ++i) System.out.println();
@@ -83,8 +81,15 @@ public class Field {
 		for(int i=0;i<maxship;i++) {
 			for(int j=0;j<size;j++) {
 				for(int k=0;k<ships[i].getSize();k++) {
-					if(orient=='v' || orient=='V' || orient=='H' || orient=='h') {
-						if((position.x==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) || (position.x+j==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y)) {
+					if(orient=='v' || orient=='V') {
+						if(position.x==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) {
+							System.out.println("Ships are intersect\nTry Again!");
+							nSize[size-2]=nSize[size-2]+1;
+							return true;
+						}
+					}
+					if(orient=='H' || orient=='h') {
+						if(position.x+j==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) {
 							System.out.println("Ships are intersect\nTry Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
@@ -96,15 +101,20 @@ public class Field {
 		return false;
 	}
 	
-	public boolean ShipInOut(Ship ship, int size) {
-		for(int i=0;i<ship.getSize();i++) {
-			if(!ship.getPosition()[i].inBorder(column,row)) { 
-				nSize[size-2]=nSize[size-2]+1;
-				System.out.println("Ship is in out!\nTry again");
-				return true;
+	public boolean ShipInBorder(Position pos, int size,char orientation) {
+		for(int i=0;i<size;i++) {
+			if(orientation == 'V' || orientation=='v') {
+				if(pos.x>=0 && pos.x<column && pos.y+i>=0 && pos.y+i<row) 
+					return true;	
+			}
+			if(orientation == 'H' || orientation=='h') {
+				if(pos.x+i>=0 && pos.x+i<column && pos.y>=0 && pos.y+i<row)
+					return true;
 			}
 		}
-		return false;
+		nSize[size-2]=nSize[size-2]+1;
+		System.out.println("Ship is in out!\nTry again");
+		return false;		
 	}
 	
 	public int isFired(Position pos) {
@@ -130,8 +140,8 @@ public class Field {
 	
 	public boolean isDestroyed(){
 		for(int i=0;i<maxShip;i++) {
-			if(ships[i].isDestroyed()==true) return true;
+			if(!ships[i].isDestroyed()) return false;
 		}
-		return false;
+		return true;
 	}
 }
