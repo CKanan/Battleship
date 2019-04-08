@@ -84,12 +84,22 @@ public class Field {
 						if(position.x==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) {
 							System.out.println("Ships are intersect\nTry Again!");
 							nSize[size-2]=nSize[size-2]+1;
+							return true;	
+						}
+						if((position.x+1==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) || (position.x-1==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y )|| (position.y+j+1==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.y+j-1==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x)) {
+							System.out.println("Ships are side by side\nTry Again!");
+							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
 					}
 					if(orient=='H' || orient=='h') {
 						if(position.x+j==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) {
 							System.out.println("Ships are intersect\nTry Again!");
+							nSize[size-2]=nSize[size-2]+1;
+							return true;
+						}
+						if((position.x+j+1==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j-1==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.y+1==ships[i].getPosition()[k].y && position.x+j==ships[i].getPosition()[k].x) || (position.y-1==ships[i].getPosition()[k].y && position.x+j==ships[i].getPosition()[k].x)) {
+							System.out.println("Ships are side by side\nTry Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
