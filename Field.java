@@ -3,7 +3,7 @@ package battleship;
 import java.util.Scanner;
 
 public class Field {
-	
+	private int border=1;
 	private  int row = 10;
 	private int column = 10;
 	private int maxShip = 2;
@@ -86,7 +86,7 @@ public class Field {
 							nSize[size-2]=nSize[size-2]+1;
 							return true;	
 						}
-						if((position.x+1==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) || (position.x-1==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y )|| (position.y+j+1==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.y+j-1==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x)) {
+						if((position.y+j+border==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.y+j-border==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.x+border==ships[i].getPosition()[k].x && position.y+j-border==ships[i].getPosition()[k].y) || (position.x+border==ships[i].getPosition()[k].x && position.y+j+border==ships[i].getPosition()[k].y) || (position.x-border==ships[i].getPosition()[k].x && position.y+j-border==ships[i].getPosition()[k].y) || (position.x-border==ships[i].getPosition()[k].x && position.y+j+border==ships[i].getPosition()[k].y)) {
 							System.out.println("Ships are side by side\nTry Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
@@ -98,7 +98,7 @@ public class Field {
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
-						if((position.x+j+1==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j-1==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.y+1==ships[i].getPosition()[k].y && position.x+j==ships[i].getPosition()[k].x) || (position.y-1==ships[i].getPosition()[k].y && position.x+j==ships[i].getPosition()[k].x)) {
+						if((position.x+j+border==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j+border==ships[i].getPosition()[k].x && position.y-border==ships[i].getPosition()[k].y) || (position.x+j+border==ships[i].getPosition()[k].x && position.y+border==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y-border==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y+border==ships[i].getPosition()[k].y)) {
 							System.out.println("Ships are side by side\nTry Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
