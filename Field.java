@@ -29,7 +29,7 @@ public class Field {
 				while(status) {
 					stat=true;
 					while(stat) {
-						System.out.println("Give "+(i+1)+" ship size: "); 
+						System.out.println("Give "+(i+1)+" Ship size: "); 
 						size=input.nextInt();
 						if(size<2 || size>5 || nSize[size-2]==0) {
 							System.out.println("Wrong size or inappropriate input!");
