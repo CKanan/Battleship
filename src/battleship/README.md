@@ -1,3 +1,0 @@
-# Battleship
-
-## Game rules.
