@@ -120,7 +120,7 @@ public class Field {
 				}	
 			}
 			if(orientation == 'H' || orientation=='h') {
-				if(pos.x+i<0 && pos.x+i>=column && pos.y<0 && pos.y+i>=row) {
+				if(pos.x+i<0 || pos.x+i>=column || pos.y<0 || pos.y>=row) {
 					nSize[size-2]=nSize[size-2]+1;
 					System.out.println("Ship is in out!\nTry again");
 					return true;
