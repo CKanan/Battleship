@@ -1,5 +1,7 @@
 package battleship;
 
+import java.util.Scanner;
+
 public class User {
 	
 	private  String name;
@@ -8,7 +10,7 @@ public class User {
 	public User(String name) {
 		this.name=name;
 		System.out.println("USER: "+this.name);
-		field=new Field();
+		field=new Field(this.name);
 	}
 		
 	public boolean isDestroyed() {
@@ -30,7 +32,17 @@ public class User {
 		
 		System.out.println(this.name+", give position to hit: ");
 		while(stat==0) {
-			pos.givePosition();
+			Scanner sc = new Scanner(System.in);
+			int x=0,y=0;
+			if(name=="BOT") {
+				x=this.field.getRandomIntegerBetweenRange(0,field.getColumn()-1);
+				y=this.field.getRandomIntegerBetweenRange(0,field.getRow()-1);
+			}
+			else {
+				x=sc.nextInt();
+				y=sc.nextInt();
+			}	
+			pos=new Position(x, y);
 			stat=a.isFired(pos);
 		}
 		a.printGrid();

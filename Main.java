@@ -6,12 +6,19 @@ public class Main {
 	
 		System.out.println("Welcome to Naval Battleship!\n");
 	
+//		User Kanan=new User("Kanan");
+//		User Nazir=new User("Nazir");
+//		
+//		while(true) {
+//			if(Kanan.play(Nazir)) break;
+//			if(Nazir.play(Kanan)) break;
+//		}
 		User Kanan=new User("Kanan");
-		User Nazir=new User("Nazir");
+		User BOT=new User("BOT");
 		
 		while(true) {
-			if(Kanan.play(Nazir)) break;
-			if(Nazir.play(Kanan)) break;
+			if(Kanan.play(BOT)) break;
+			if(BOT.play(Kanan)) break;
 		}
 	}
 

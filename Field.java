@@ -1,5 +1,6 @@
 package battleship;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Field {
@@ -11,7 +12,22 @@ public class Field {
 	private int[] nSize= {1,2,1,1};
 	private char[][] grid = new char[row][column];
 	
-	public Field() {
+	public int getColumn() {return this.column;}
+	public int getRow() {return this.row;}
+	
+	Random rand =new Random(); 
+	
+	public int getRandomIntegerBetweenRange(int min,int max){
+		int x=rand.nextInt(max - min + 1) + min;
+	    return x;
+	}
+	
+	public char getRandomChar() {
+		char c = rand.nextBoolean() ? 'v' : 'h';
+		return c;
+	}
+	
+	public Field(String name) {
 		for(int i=0;i<row;i++) {
 			for(int j=0;j<column;j++)
 				grid[i][j]='.';
@@ -29,8 +45,13 @@ public class Field {
 				while(status) {
 					stat=true;
 					while(stat) {
-						System.out.println("Give "+(i+1)+" Ship size: "); 
-						size=input.nextInt();
+						if(name=="BOT") {
+							size=getRandomIntegerBetweenRange(2, 5);
+						}
+						else{
+							System.out.println("Give "+(i+1)+" Ship size: "); 
+							size=input.nextInt();
+						}	
 						if(size<2 || size>5 || nSize[size-2]==0) {
 							System.out.println("Wrong size or inappropriate input!");
 						}
@@ -41,9 +62,16 @@ public class Field {
 					}
 					stat=true;	
 					while(stat) {
-						System.out.println("Give beginnig position of ship: ");
-						int x=input.nextInt();
-						int y=input.nextInt();
+						int x=0,y=0;
+						if(name=="BOT") {
+							x=getRandomIntegerBetweenRange(0,column-1);
+							y=getRandomIntegerBetweenRange(0, row-1);
+						}
+						else {
+							System.out.println("Give beginnig position of ship: ");
+							x=input.nextInt();
+							y=input.nextInt();
+						}	
 						pos=new Position(x, y);
 						if(!pos.inBorder(column,row)) 
 							System.out.println("Positions have to between [0,"+(row-1)+"]!");
@@ -51,8 +79,13 @@ public class Field {
 					}
 					stat=true;
 					while(stat) {
-						System.out.println("Give orientation: "); 
-						orient=input.next().charAt(0);
+						if(name=="BOT") {
+							orient=getRandomChar();
+						}
+						else {
+							System.out.println("Give orientation: "); 
+							orient=input.next().charAt(0);
+						}	
 						if(orient=='v' || orient=='V' || orient=='h' || orient=='H')
 							stat=false;
 						else System.out.println("Orientation have to (v,V or h,H)");

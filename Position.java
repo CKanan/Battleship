@@ -6,12 +6,6 @@ public class Position {
 	
 	public int x,y;
 	
-	void givePosition () {
-		Scanner sc = new Scanner(System.in);
-		this.x = sc.nextInt();
-		this.y = sc.nextInt();
-	}
-	
 	public Position(int x,int y) {
 		this.x = x;
 		this.y = y;
