@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Field {
+	
 	private int border=1;
 	private  int row = 10;
 	private int column = 10;
@@ -53,7 +54,7 @@ public class Field {
 							size=input.nextInt();
 						}	
 						if(size<2 || size>5 || nSize[size-2]==0) {
-							System.out.println(" Wrong size or inappropriate input!");
+							if(name!="BOT") System.out.println(" Wrong size or inappropriate input!");
 						}
 						else {
 							nSize[size-2]=nSize[size-2]-1;
@@ -90,9 +91,9 @@ public class Field {
 							stat=false;
 						else System.out.println(" Orientation have to (v,V or h,H)");
 					}	
-					status=isCrashed(pos, size, orient,i);
+					status=isCrashed(pos, size, orient,i,name);
 				}
-				st=ShipInOut(pos, size, orient);
+				st=ShipInOut(pos, size, orient,name);
 			}
 			ships[i]=new Ship(pos, size, orient,grid);
 		}
@@ -110,30 +111,30 @@ public class Field {
 		System.out.println();
 	}
 	
-	public boolean isCrashed(Position position,int size,char orient,int maxship) {
+	public boolean isCrashed(Position position,int size,char orient,int maxship,String name) {
 		for(int i=0;i<maxship;i++) {
 			for(int j=0;j<size;j++) {
 				for(int k=0;k<ships[i].getSize();k++) {
 					if(orient=='v' || orient=='V') {
 						if(position.x==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) {
-							System.out.println(" Ships are intersect\n Try Again!");
+							if(name!="BOT") System.out.println(" Ships are intersect\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;	
 						}
 						if((position.y+j+border==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.y+j-border==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.x+border==ships[i].getPosition()[k].x && position.y+j-border==ships[i].getPosition()[k].y) || (position.x+border==ships[i].getPosition()[k].x && position.y+j+border==ships[i].getPosition()[k].y) || (position.x-border==ships[i].getPosition()[k].x && position.y+j-border==ships[i].getPosition()[k].y) || (position.x-border==ships[i].getPosition()[k].x && position.y+j+border==ships[i].getPosition()[k].y)) {
-							System.out.println(" Ships are side by side\n Try Again!");
+							if(name!="BOT") System.out.println(" Ships are side by side\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
 					}
 					if(orient=='H' || orient=='h') {
 						if(position.x+j==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) {
-							System.out.println(" Ships are intersect\n Try Again!");
+							if(name!="BOT") System.out.println(" Ships are intersect\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
 						if((position.x+j+border==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j+border==ships[i].getPosition()[k].x && position.y-border==ships[i].getPosition()[k].y) || (position.x+j+border==ships[i].getPosition()[k].x && position.y+border==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y-border==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y+border==ships[i].getPosition()[k].y)) {
-							System.out.println(" Ships are side by side\n Try Again!");
+							if(name!="BOT") System.out.println(" Ships are side by side\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
@@ -144,19 +145,19 @@ public class Field {
 		return false;
 	}
 	
-	public boolean ShipInOut(Position pos, int size,char orientation) {
+	public boolean ShipInOut(Position pos, int size,char orientation,String name) {
 		for(int i=0;i<size;i++) {
 			if(orientation == 'V' || orientation=='v') {
 				if(pos.x<0 || pos.x>=column || pos.y+i<0 || pos.y+i>=row) {				
 					nSize[size-2]=nSize[size-2]+1;
-					System.out.println(" Ship is in out!\n Try again");
+					if(name!="BOT") System.out.println(" Ship is in out!\n Try again");
 					return true;	
 				}	
 			}
 			if(orientation == 'H' || orientation=='h') {
 				if(pos.x+i<0 || pos.x+i>=column || pos.y<0 || pos.y>=row) {
 					nSize[size-2]=nSize[size-2]+1;
-					System.out.println(" Ship is in out!\n Try again");
+					if(name!="BOT") System.out.println(" Ship is in out!\n Try again");
 					return true;
 				}	
 			}
