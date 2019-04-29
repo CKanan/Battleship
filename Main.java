@@ -10,7 +10,7 @@ public class Main {
 		
 		User Kanan=new User("Kanan");
 		
-		System.out.println("Choose your opponent options:\ntrue-for USER,false-for BOT");
+		System.out.println("Choose your opponent options:\n true-for USER,false-for BOT");
 		Scanner sc = new Scanner(System.in);
 		boolean opponent=sc.nextBoolean();
 	

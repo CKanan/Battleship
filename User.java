@@ -22,7 +22,7 @@ public class User {
 	}
 	
 	public void printGrid() {
-		System.out.print("\n     "+this.name+"'s table");
+		System.out.print("\n     "+this.name+"'s field");
 		field.printGrid();
 	}
 	
@@ -30,7 +30,7 @@ public class User {
 		Position pos=new Position();
 		int stat=0;
 		
-		System.out.println(this.name+", give position to hit: ");
+		System.out.println("\n"+this.name+", give position to hit: ");
 		while(stat==0) {
 			Scanner sc = new Scanner(System.in);
 			int x=0,y=0;
@@ -45,9 +45,9 @@ public class User {
 			pos=new Position(x, y);
 			stat=a.isFired(pos);
 		}
-		a.printGrid();
+		if(name=="BOT") a.printGrid();
 		if(a.isDestroyed()) {
-			System.out.println(this.name+" won!");
+			System.out.println(this.name+" WON!");
 		}
 		return a.isDestroyed();
 	}	

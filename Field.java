@@ -7,7 +7,7 @@ public class Field {
 	private int border=1;
 	private  int row = 10;
 	private int column = 10;
-	private int maxShip = 2;
+	private int maxShip = 5;
 	private Ship[] ships = new Ship[maxShip];
 	private int[] nSize= {1,2,1,1};
 	private char[][] grid = new char[row][column];
@@ -53,7 +53,7 @@ public class Field {
 							size=input.nextInt();
 						}	
 						if(size<2 || size>5 || nSize[size-2]==0) {
-							System.out.println("Wrong size or inappropriate input!");
+							System.out.println(" Wrong size or inappropriate input!");
 						}
 						else {
 							nSize[size-2]=nSize[size-2]-1;
@@ -74,7 +74,7 @@ public class Field {
 						}	
 						pos=new Position(x, y);
 						if(!pos.inBorder(column,row)) 
-							System.out.println("Positions have to between [0,"+(row-1)+"]!");
+							System.out.println(" Positions have to between [0,"+(row-1)+"]!");
 						stat=!pos.inBorder(column,row);
 					}
 					stat=true;
@@ -88,7 +88,7 @@ public class Field {
 						}	
 						if(orient=='v' || orient=='V' || orient=='h' || orient=='H')
 							stat=false;
-						else System.out.println("Orientation have to (v,V or h,H)");
+						else System.out.println(" Orientation have to (v,V or h,H)");
 					}	
 					status=isCrashed(pos, size, orient,i);
 				}
@@ -96,7 +96,8 @@ public class Field {
 			}
 			ships[i]=new Ship(pos, size, orient,grid);
 		}
-		printGrid();
+		if(name=="BOT") System.out.println("\n YOU CAN'T SEE BOT's FIELD\n"); 
+		else printGrid();
 	}
 	
 	public void printGrid() {
@@ -115,24 +116,24 @@ public class Field {
 				for(int k=0;k<ships[i].getSize();k++) {
 					if(orient=='v' || orient=='V') {
 						if(position.x==ships[i].getPosition()[k].x && position.y+j==ships[i].getPosition()[k].y) {
-							System.out.println("Ships are intersect\nTry Again!");
+							System.out.println(" Ships are intersect\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;	
 						}
 						if((position.y+j+border==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.y+j-border==ships[i].getPosition()[k].y && position.x==ships[i].getPosition()[k].x) || (position.x+border==ships[i].getPosition()[k].x && position.y+j-border==ships[i].getPosition()[k].y) || (position.x+border==ships[i].getPosition()[k].x && position.y+j+border==ships[i].getPosition()[k].y) || (position.x-border==ships[i].getPosition()[k].x && position.y+j-border==ships[i].getPosition()[k].y) || (position.x-border==ships[i].getPosition()[k].x && position.y+j+border==ships[i].getPosition()[k].y)) {
-							System.out.println("Ships are side by side\nTry Again!");
+							System.out.println(" Ships are side by side\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
 					}
 					if(orient=='H' || orient=='h') {
 						if(position.x+j==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) {
-							System.out.println("Ships are intersect\nTry Again!");
+							System.out.println(" Ships are intersect\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
 						if((position.x+j+border==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y==ships[i].getPosition()[k].y) || (position.x+j+border==ships[i].getPosition()[k].x && position.y-border==ships[i].getPosition()[k].y) || (position.x+j+border==ships[i].getPosition()[k].x && position.y+border==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y-border==ships[i].getPosition()[k].y) || (position.x+j-border==ships[i].getPosition()[k].x && position.y+border==ships[i].getPosition()[k].y)) {
-							System.out.println("Ships are side by side\nTry Again!");
+							System.out.println(" Ships are side by side\n Try Again!");
 							nSize[size-2]=nSize[size-2]+1;
 							return true;
 						}
@@ -148,14 +149,14 @@ public class Field {
 			if(orientation == 'V' || orientation=='v') {
 				if(pos.x<0 || pos.x>=column || pos.y+i<0 || pos.y+i>=row) {				
 					nSize[size-2]=nSize[size-2]+1;
-					System.out.println("Ship is in out!\nTry again");
+					System.out.println(" Ship is in out!\n Try again");
 					return true;	
 				}	
 			}
 			if(orientation == 'H' || orientation=='h') {
 				if(pos.x+i<0 || pos.x+i>=column || pos.y<0 || pos.y>=row) {
 					nSize[size-2]=nSize[size-2]+1;
-					System.out.println("Ship is in out!\nTry again");
+					System.out.println(" Ship is in out!\n Try again");
 					return true;
 				}	
 			}
@@ -165,22 +166,22 @@ public class Field {
 	
 	public int isFired(Position pos) {
 		if(!pos.inBorder(column,row)) {
-			System.out.println("Position is in out!\nChoose another position:");
+			System.out.println(" Position is in out!\n Choose another position:");
 			return 0;
 		}
 		if(grid[pos.y][pos.x]!='.' && grid[pos.y][pos.x]!='A' && grid[pos.y][pos.x]!='B' && grid[pos.y][pos.x]!='C' && grid[pos.y][pos.x]!='D'){
-			System.out.println("Cannot shoot more than one\nChoose another position:");
+			System.out.println(" Cannot shoot more than one\n Choose another position:");
 			return 0;
 		}
 		for(int i=0;i<maxShip;i++) {
 			if(ships[i].isFired(pos)==true) { 
 				grid[pos.y][pos.x]='X';
-				System.out.println("Ship has been shot!");
+				System.out.println(" Ship has been shot!");
 				return 1;
 			}	
 		}
 		grid[pos.y][pos.x]='O';
-		System.out.println("Ship has been missed!");
+		System.out.println(" Ship has been missed!");
 		return 2;
 	}
 	
